@@ -1,0 +1,39 @@
+import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { appConfig, databaseConfig } from './config';
+import { SequelizeModule } from '@nestjs/sequelize';
+
+
+
+@Module({
+  imports: [ServeStaticModule.forRoot({
+    serveRoot: "/uploads",
+    rootPath: "/uploads"
+  }),
+  ConfigModule.forRoot({
+    isGlobal: true,
+    load: [databaseConfig,appConfig]
+  }),
+  SequelizeModule.forRootAsync({
+    imports: [ConfigModule],
+    inject: [ConfigService],
+    useFactory: (configService: ConfigService) =>({
+      dialect: 'postgres',
+      username: configService.get<string>("database.user"),
+      password: configService.get<string>("database.pass"),
+      database: configService.get("database.database"),
+      port: configService.get<number>("database.port"),
+      host: configService.get<string>("database.host"),
+      autoLoadModels: true,
+      sync: {force: true},
+      models: [],
+      synchronize: true,
+      logging: console.log
+    }),
+  })
+],
+  controllers: [],
+  providers: [],
+})
+export class AppModule {}
