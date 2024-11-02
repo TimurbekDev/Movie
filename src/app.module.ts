@@ -5,8 +5,7 @@ import { appConfig, databaseConfig } from './config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Category } from './modules/categories/entities';
 import { CategoriesModule } from './modules/categories/categories.module';
-
-
+import { MoviesModule } from './modules';
 
 @Module({
   imports: [ServeStaticModule.forRoot({
@@ -35,7 +34,8 @@ import { CategoriesModule } from './modules/categories/categories.module';
 
     }),
   }),
-  CategoriesModule
+  CategoriesModule,
+  MoviesModule,
 ],
   controllers: [],
   providers: [],

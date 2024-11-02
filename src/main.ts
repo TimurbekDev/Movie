@@ -9,10 +9,10 @@ async function startApp() {
 
   // USE SWAGGER
   const config = new DocumentBuilder()
-    .setTitle('Movie')
-    .setDescription('The Movie API description')
+    .setTitle('MovieSite')
+    .setDescription('The MovieSite API description')
     .setVersion('1.0')
-    .addTag('Movie')
+    .addTag('MovieSite')
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);
