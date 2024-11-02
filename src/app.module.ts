@@ -3,6 +3,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { appConfig, databaseConfig } from './config';
 import { SequelizeModule } from '@nestjs/sequelize';
+import { Category } from './modules/categories/entities';
+import { CategoriesModule } from './modules/categories/categories.module';
 
 
 
@@ -25,13 +27,15 @@ import { SequelizeModule } from '@nestjs/sequelize';
       database: configService.get("database.database"),
       port: configService.get<number>("database.port"),
       host: configService.get<string>("database.host"),
-      autoLoadModels: true,
-      sync: {force: true},
-      models: [],
       synchronize: true,
-      logging: console.log
+      logging: console.log,
+      autoLoadModels: true,
+      // sync: {force: true},
+      models: [Category],
+
     }),
-  })
+  }),
+  CategoriesModule
 ],
   controllers: [],
   providers: [],
