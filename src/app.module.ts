@@ -5,10 +5,14 @@ import { appConfig, databaseConfig } from './config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Category } from './modules/categories/entities';
 import { CategoriesModule } from './modules/categories/categories.module';
+
 import { JwtModule } from '@nestjs/jwt';
 import { UsersModule } from './modules';
 import { AuthModule } from './modules/auth/auth.module';
 
+
+
+import { MoviesModule } from './modules';
 
 
 @Module({
@@ -46,6 +50,8 @@ import { AuthModule } from './modules/auth/auth.module';
   CategoriesModule,
   UsersModule,
   AuthModule,
+  CategoriesModule,
+  MoviesModule,
 ],
   controllers: [],
   providers: [],
