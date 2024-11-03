@@ -5,6 +5,9 @@ import { appConfig, databaseConfig } from './config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Category } from './modules/categories/entities';
 import { CategoriesModule } from './modules/categories/categories.module';
+import { JwtModule } from '@nestjs/jwt';
+import { UsersModule } from './modules';
+import { AuthModule } from './modules/auth/auth.module';
 
 
 
@@ -35,7 +38,14 @@ import { CategoriesModule } from './modules/categories/categories.module';
 
     }),
   }),
-  CategoriesModule
+  JwtModule.register({
+    global: true,
+    secret: "my-secret-key",
+    signOptions: { expiresIn: 120 },
+  }),
+  CategoriesModule,
+  UsersModule,
+  AuthModule,
 ],
   controllers: [],
   providers: [],
