@@ -1,6 +1,7 @@
 import { Column, DataType, ForeignKey, Model, Table } from "sequelize-typescript";
-import { Movie } from "../movies";
-import { Actor } from "../actor/entities";
+import { Actor } from "src/modules/actor/entities";
+import { Movie } from "src/modules/movies";
+
 
 
 @Table({ tableName: "movie_actors", timestamps: true })

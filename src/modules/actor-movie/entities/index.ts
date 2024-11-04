@@ -1,0 +1,1 @@
+export * from "./actor-movie.entity"

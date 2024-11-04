@@ -1,5 +1,6 @@
 import { BelongsToMany, Column, DataType, Model, Table } from "sequelize-typescript";
-import { MovieActor } from "src/modules/ActorMovie";
+import { MovieActor } from "src/modules/actor-movie/entities";
+
 import { Movie } from "src/modules/movies";
 
 @Table({tableName: "actors", timestamps: true})

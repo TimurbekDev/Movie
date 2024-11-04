@@ -5,7 +5,9 @@ import { appConfig, databaseConfig } from './config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { JwtModule } from '@nestjs/jwt';
 import { Actor, ActorModule, AuthModule, CategoriesModule, Category, Movie, MoviesModule, Review, ReviewsModule, User, UsersModule } from './modules';
-import { MovieActor } from './modules/ActorMovie';
+import { MovieActor } from './modules/actor-movie/entities';
+import { ActorMovieModule } from './modules/actor-movie/actor-movie.module';
+
 
 
 
@@ -50,6 +52,7 @@ import { MovieActor } from './modules/ActorMovie';
   ReviewsModule,
   ActorModule,
   ActorModule,
+  ActorMovieModule
   
 ],
   controllers: [],

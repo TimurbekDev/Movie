@@ -4,7 +4,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { Movie } from './models';
 import { Review } from '../reviews/entities/review.entity';
 import { User } from '../users';
-import { MovieActor } from '../ActorMovie';
+
 import { Actor } from '../actor';
 
 @Injectable()
@@ -28,7 +28,8 @@ export class MoviesService {
           ],
         },
         {
-          model: Actor
+          model: Actor,
+          attributes: ["id","name","image"]
         }
       ],
     });

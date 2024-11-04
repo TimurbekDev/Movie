@@ -1,6 +1,7 @@
 import { BelongsTo, BelongsToMany, Column, DataType, ForeignKey, HasMany, Model, Table } from "sequelize-typescript";
 import { Actor } from "src/modules/actor";
-import { MovieActor } from "src/modules/ActorMovie";
+import { MovieActor } from "src/modules/actor-movie/entities";
+
 import { Category } from "src/modules/categories";
 import { Review } from "src/modules/reviews/entities/review.entity";
 
