@@ -6,7 +6,6 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function startApp() {
   const app = await NestFactory.create(AppModule);
 
-
   // USE SWAGGER
   const config = new DocumentBuilder()
     .setTitle('MovieSite')
@@ -16,7 +15,6 @@ async function startApp() {
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);
-
 
   // USE CONFIG SERVICE
   const configService = app.get(ConfigService);

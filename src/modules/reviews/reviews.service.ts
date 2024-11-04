@@ -5,14 +5,14 @@ import { InjectModel } from '@nestjs/sequelize';
 import { Review } from './entities/review.entity';
 
 export declare interface updateDeleteReviewresult {
-  message: string
+  message: string;
 }
 
 @Injectable()
 export class ReviewsService {
-  constructor(@InjectModel(Review) private reviewModel: typeof Review){}
+  constructor(@InjectModel(Review) private reviewModel: typeof Review) {}
   async create(createReviewDto: CreateReviewDto) {
-    return await this.reviewModel.create(createReviewDto) ;
+    return await this.reviewModel.create(createReviewDto);
   }
 
   async findAll(): Promise<Review[]> {
@@ -23,23 +23,26 @@ export class ReviewsService {
     return await this.reviewModel.findByPk(id);
   }
 
-  async update(id: number, updateReviewDto: UpdateReviewDto):Promise<updateDeleteReviewresult> {
-    const foundedReview = await this.reviewModel.findByPk(id)
-    if(!foundedReview){
-      throw new NotFoundException("Review not found")
+  async update(
+    id: number,
+    updateReviewDto: UpdateReviewDto,
+  ): Promise<updateDeleteReviewresult> {
+    const foundedReview = await this.reviewModel.findByPk(id);
+    if (!foundedReview) {
+      throw new NotFoundException('Review not found');
     }
     return {
-      message: "Review updated"
+      message: 'Review updated',
     };
   }
 
   async remove(id: number): Promise<updateDeleteReviewresult> {
-    const foundedReview = await this.reviewModel.findByPk(id)
-    if(!foundedReview){
-      throw new NotFoundException("Review not found")
+    const foundedReview = await this.reviewModel.findByPk(id);
+    if (!foundedReview) {
+      throw new NotFoundException('Review not found');
     }
     return {
-      message: "Review deleted"
+      message: 'Review deleted',
     };
   }
 }

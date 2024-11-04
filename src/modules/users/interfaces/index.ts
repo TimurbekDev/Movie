@@ -1,1 +1,1 @@
-export * from "./user-create.interfaces"
+export * from './user-create.interfaces';

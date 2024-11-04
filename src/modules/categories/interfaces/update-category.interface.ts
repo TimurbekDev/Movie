@@ -1,3 +1,3 @@
 export declare interface IUpdateCategory {
-    name?: string
+  name?: string;
 }

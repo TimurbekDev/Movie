@@ -12,20 +12,20 @@ export class AuthService {
   async googleAuth(req: any) {
     console.log(req.user);
 
-    const foundeduser = await this.userService.findByEmail(req.user.emails[0].value)
+    const foundeduser = await this.userService.findByEmail(
+      req.user.emails[0].value,
+    );
 
     if (foundeduser) {
-      return {message: "User arleady exists"};
+      return { message: 'User arleady exists' };
     }
 
     const newUser = await this.userService.create({
-        name: req.user.displayName,
-        email: req.user.emails[0].value,
-        image: req.user.photos[0].value,
-        status: userStatus.USER
-    })
-
-
+      name: req.user.displayName,
+      email: req.user.emails[0].value,
+      image: req.user.photos[0].value,
+      status: userStatus.USER,
+    });
 
     const accessToken = this.jwt.sign(
       { id: newUser.id, status: newUser.status },

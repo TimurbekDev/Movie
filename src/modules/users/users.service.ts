@@ -7,7 +7,7 @@ import { resourceUsage } from 'process';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(User) private userModel: typeof User){}
+  constructor(@InjectModel(User) private userModel: typeof User) {}
   create(createUserDto: CreateUserDto) {
     return this.userModel.create(createUserDto);
   }
@@ -16,38 +16,37 @@ export class UsersService {
     return await this.userModel.findAll();
   }
 
-
   async findByEmail(email: string): Promise<User> {
-    return await this.userModel.findOne({where :{email: email}})
+    return await this.userModel.findOne({ where: { email: email } });
   }
 
   async findOne(id: number): Promise<User> {
-    const foundeduser = await this.userModel.findByPk(id)
-    if(!foundeduser){
-      throw new NotFoundException("User mot found")
+    const foundeduser = await this.userModel.findByPk(id);
+    if (!foundeduser) {
+      throw new NotFoundException('User mot found');
     }
     return foundeduser;
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<object> {
-    const foundeduser = await this.userModel.findByPk(id)
-    if(!foundeduser){
-      throw new NotFoundException("User not found")
+    const foundeduser = await this.userModel.findByPk(id);
+    if (!foundeduser) {
+      throw new NotFoundException('User not found');
     }
-   await this.userModel.update(updateUserDto, {where: {id: id}})
+    await this.userModel.update(updateUserDto, { where: { id: id } });
     return {
-      message: "Updated success"
-    }
+      message: 'Updated success',
+    };
   }
 
   async remove(id: number): Promise<object> {
-    const foundeduser = await this.userModel.findByPk(id)
-    if(!foundeduser){
-      throw new NotFoundException("User not found")
+    const foundeduser = await this.userModel.findByPk(id);
+    if (!foundeduser) {
+      throw new NotFoundException('User not found');
     }
-    await this.userModel.destroy({where: {id: id}})
+    await this.userModel.destroy({ where: { id: id } });
     return {
-      message: "Deleted success"
+      message: 'Deleted success',
     };
   }
 }

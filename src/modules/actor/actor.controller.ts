@@ -1,11 +1,19 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ActorService, updateDeleteActorResponse } from './actor.service';
 import { CreateActorDto } from './dto/create-actor.dto';
 import { UpdateActorDto } from './dto/update-actor.dto';
 import { Actor } from './entities';
 import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags("Actor")
+@ApiTags('Actor')
 @Controller('actor')
 export class ActorController {
   constructor(private readonly actorService: ActorService) {}
@@ -21,17 +29,20 @@ export class ActorController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string):Promise<Actor> {
+  findOne(@Param('id') id: string): Promise<Actor> {
     return this.actorService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateActorDto: UpdateActorDto): Promise<updateDeleteActorResponse> {
+  update(
+    @Param('id') id: string,
+    @Body() updateActorDto: UpdateActorDto,
+  ): Promise<updateDeleteActorResponse> {
     return this.actorService.update(+id, updateActorDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string):Promise<updateDeleteActorResponse> {
+  remove(@Param('id') id: string): Promise<updateDeleteActorResponse> {
     return this.actorService.remove(+id);
   }
 }

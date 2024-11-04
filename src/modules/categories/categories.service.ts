@@ -6,7 +6,7 @@ import { Category } from './entities';
 
 @Injectable()
 export class CategoriesService {
-  constructor(@InjectModel(Category) private categoryModel: typeof Category){}
+  constructor(@InjectModel(Category) private categoryModel: typeof Category) {}
   async create(createCategoryDto: CreateCategoryDto): Promise<Category> {
     return await this.categoryModel.create(createCategoryDto);
   }
@@ -16,40 +16,39 @@ export class CategoriesService {
   }
 
   async findOne(id: number): Promise<Category> {
-    if(!(await this.categoryModel.findByPk(id))){
-      throw new NotFoundException("Category not found")
+    if (!(await this.categoryModel.findByPk(id))) {
+      throw new NotFoundException('Category not found');
     }
     return await this.categoryModel.findByPk(id);
   }
 
-  async update(id: number, updateCategoryDto: UpdateCategoryDto): Promise<Category> {
-    if(!(await this.categoryModel.findByPk(id))){
-      throw new NotFoundException("Category not found")
+  async update(
+    id: number,
+    updateCategoryDto: UpdateCategoryDto,
+  ): Promise<Category> {
+    if (!(await this.categoryModel.findByPk(id))) {
+      throw new NotFoundException('Category not found');
     }
-    await this.categoryModel.update(
-      updateCategoryDto,
-      {where: {id: id}}
-    )
+    await this.categoryModel.update(updateCategoryDto, { where: { id: id } });
 
-    const updatedCategory = await this.categoryModel.findByPk(id)
-    return updatedCategory
-   
+    const updatedCategory = await this.categoryModel.findByPk(id);
+    return updatedCategory;
   }
 
   async remove(id: number): Promise<object> {
-    if(!(await this.categoryModel.findByPk(id))){
-      throw new NotFoundException("Category not found")
+    if (!(await this.categoryModel.findByPk(id))) {
+      throw new NotFoundException('Category not found');
     }
 
-    await this.categoryModel.destroy({where: {id: id}})
-  
-    if(!(await this.categoryModel.findByPk(id))){
+    await this.categoryModel.destroy({ where: { id: id } });
+
+    if (!(await this.categoryModel.findByPk(id))) {
       return {
-        message: "Success deleted",
-      }
+        message: 'Success deleted',
+      };
     }
     return {
-      message: "Something wrong!"
-    }
+      message: 'Something wrong!',
+    };
   }
 }
