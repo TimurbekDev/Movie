@@ -1,26 +1,51 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateActorDto } from './dto/create-actor.dto';
 import { UpdateActorDto } from './dto/update-actor.dto';
+import { InjectModel } from '@nestjs/sequelize';
+import { Actor } from './entities';
+
+export declare interface updateDeleteActorResponse{
+  message: string
+}
 
 @Injectable()
 export class ActorService {
-  create(createActorDto: CreateActorDto) {
-    return 'This action adds a new actor';
+  constructor(@InjectModel(Actor) private actorModel: typeof Actor){}
+  async create(createActorDto: CreateActorDto) {
+    return await this.actorModel.create(createActorDto);
   }
 
-  findAll() {
-    return `This action returns all actor`;
+  async findAll(): Promise<Actor[]> {
+    return await this.actorModel.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} actor`;
+  async findOne(id: number): Promise<Actor>  {
+    const foundedActor = await this.actorModel.findByPk(id)
+    if(!foundedActor){
+      throw new NotFoundException("Actor not found")
+    }
+    return foundedActor;
   }
 
-  update(id: number, updateActorDto: UpdateActorDto) {
-    return `This action updates a #${id} actor`;
+  async update(id: number, updateActorDto: UpdateActorDto):Promise<updateDeleteActorResponse> {
+    const foundedActor = await this.actorModel.findByPk(id)
+    if(!foundedActor){
+      throw new NotFoundException("Actor not found")
+    }
+    await this.actorModel.update(updateActorDto, {where: {id: id}})
+    return {
+      message: "updated success"
+    };
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} actor`;
+  async remove(id: number): Promise<updateDeleteActorResponse> {
+    const foundedActor = await this.actorModel.findByPk(id)
+    if(!foundedActor){
+      throw new NotFoundException("Actor not found")
+    }
+    await this.actorModel.destroy({where: {id: id}})
+    return {
+      message: "deleted success"
+    };
   }
 }

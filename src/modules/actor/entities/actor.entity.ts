@@ -1,7 +1,7 @@
-import { Column, DataType, Table } from "sequelize-typescript";
+import { Column, DataType, Model, Table } from "sequelize-typescript";
 
 @Table({tableName: "actors", timestamps: true})
-export class Actor {
+export class Actor extends  Model<Actor> {
     @Column({type: DataType.STRING, allowNull: false})
     name: string
 
