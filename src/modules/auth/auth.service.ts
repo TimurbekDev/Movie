@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { Model } from 'mongoose';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService, userStatus } from '../users';
 

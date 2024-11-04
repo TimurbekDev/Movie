@@ -40,4 +40,31 @@ export class CreateMovieDto {
     @IsString()
     @IsNotEmpty()
     video: string;
+
+    @ApiProperty({
+        type: String,
+        required: true,
+        example: "English"
+    })
+    @IsString()
+    @IsNotEmpty()
+    language: string;
+
+    @ApiProperty({
+        type: String,
+        required: true,
+        example: "USA"
+    })
+    @IsString()
+    @IsNotEmpty()
+    country: string;
+
+    @ApiProperty({
+        type: Number,
+        required: true,
+        example: 1
+    })
+    @IsString()
+    @IsNotEmpty()
+    category_id: number;
 }

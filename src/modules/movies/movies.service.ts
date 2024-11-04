@@ -3,7 +3,6 @@ import { ICreateMovieRequest, IUpdateMovieRequest } from './interfaces';
 import { InjectModel } from '@nestjs/sequelize';
 import { Movie } from './models';
 import { Review } from '../reviews/entities/review.entity';
-import { model } from 'mongoose';
 import { User } from '../users';
 
 @Injectable()
