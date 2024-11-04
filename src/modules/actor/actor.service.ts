@@ -3,6 +3,8 @@ import { CreateActorDto } from './dto/create-actor.dto';
 import { UpdateActorDto } from './dto/update-actor.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { Actor } from './entities';
+import { model } from 'mongoose';
+import { Movie } from '../movies';
 
 export declare interface updateDeleteActorResponse{
   message: string
@@ -16,7 +18,7 @@ export class ActorService {
   }
 
   async findAll(): Promise<Actor[]> {
-    return await this.actorModel.findAll();
+    return await this.actorModel.findAll({include: [{model: Movie}]});
   }
 
   async findOne(id: number): Promise<Actor>  {

@@ -4,6 +4,8 @@ import { InjectModel } from '@nestjs/sequelize';
 import { Movie } from './models';
 import { Review } from '../reviews/entities/review.entity';
 import { User } from '../users';
+import { MovieActor } from '../ActorMovie';
+import { Actor } from '../actor';
 
 @Injectable()
 export class MoviesService {
@@ -14,30 +16,45 @@ export class MoviesService {
   }
 
   async findAll(): Promise<Movie[]> {
-    return await this.movieModel.findAll({include: [{model: Review, attributes: ["user_id","text"],include: [{model: User}]}]});
+    return await this.movieModel.findAll({
+      include: [
+        {
+          model: Review,
+          attributes: ['user_id', 'text'],
+          include: [
+            { 
+              model: User
+            }
+          ],
+        },
+        {
+          model: Actor
+        }
+      ],
+    });
   }
 
-  async findOne(id: number): Promise<Movie>{
-    if(!(await this.movieModel.findByPk(id))){
-      throw new NotFoundException("Movie not found")
+  async findOne(id: number): Promise<Movie> {
+    if (!(await this.movieModel.findByPk(id))) {
+      throw new NotFoundException('Movie not found');
     }
     return await this.movieModel.findByPk(id);
   }
 
   async update(id: number, payload: IUpdateMovieRequest): Promise<Movie> {
-    if(!(await this.movieModel.findByPk(id))){
-      throw new NotFoundException("Movie not found")
+    if (!(await this.movieModel.findByPk(id))) {
+      throw new NotFoundException('Movie not found');
     }
-    await this.movieModel.update(payload, {where: {id}});
-    const movie = await this.movieModel.findByPk(id)
-    return movie
+    await this.movieModel.update(payload, { where: { id } });
+    const movie = await this.movieModel.findByPk(id);
+    return movie;
   }
 
   async remove(id: number) {
-    if(!(await this.movieModel.findByPk(id))){
-      throw new NotFoundException("Movie not found")
+    if (!(await this.movieModel.findByPk(id))) {
+      throw new NotFoundException('Movie not found');
     }
-    
-    return await this.movieModel.destroy({where: {id}});
+
+    return await this.movieModel.destroy({ where: { id } });
   }
 }

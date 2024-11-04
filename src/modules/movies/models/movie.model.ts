@@ -1,4 +1,6 @@
-import { BelongsTo, Column, DataType, ForeignKey, HasMany, Model, Table } from "sequelize-typescript";
+import { BelongsTo, BelongsToMany, Column, DataType, ForeignKey, HasMany, Model, Table } from "sequelize-typescript";
+import { Actor } from "src/modules/actor";
+import { MovieActor } from "src/modules/ActorMovie";
 import { Category } from "src/modules/categories";
 import { Review } from "src/modules/reviews/entities/review.entity";
 
@@ -25,9 +27,13 @@ export class Movie extends Model<Movie> {
     @ForeignKey(() => Category)
     @Column({type: DataType.INTEGER, allowNull: false, onDelete: 'CASCADE', onUpdate: 'NO ACTION'})
     category_id: number
+
     @BelongsTo(() => Category)
     category: Category
 
     @HasMany(()=>Review)
     reviews: Review[]
+
+    @BelongsToMany(() => Actor, () => MovieActor)
+    actors: Actor[];
 }
