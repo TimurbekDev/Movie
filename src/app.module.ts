@@ -4,7 +4,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { appConfig, databaseConfig } from './config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { JwtModule } from '@nestjs/jwt';
-import { AuthModule, CategoriesModule, Category, Movie, MoviesModule, Review, ReviewsModule, User, UsersModule } from './modules';
+import { ActorModule, AuthModule, CategoriesModule, Category, Movie, MoviesModule, Review, ReviewsModule, User, UsersModule } from './modules';
 
 
 
@@ -32,7 +32,7 @@ import { AuthModule, CategoriesModule, Category, Movie, MoviesModule, Review, Re
       synchronize: true,
       logging: console.log,
       autoLoadModels: true,
-      sync: {force: true},
+      // sync: {force: true},
       models: [Category,User,Review,Movie],
 
     }),
@@ -46,7 +46,8 @@ import { AuthModule, CategoriesModule, Category, Movie, MoviesModule, Review, Re
   UsersModule,
   AuthModule,
   MoviesModule,
-  ReviewsModule
+  ReviewsModule,
+  ActorModule
 ],
   controllers: [],
   providers: [],

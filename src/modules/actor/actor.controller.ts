@@ -3,7 +3,9 @@ import { ActorService, updateDeleteActorResponse } from './actor.service';
 import { CreateActorDto } from './dto/create-actor.dto';
 import { UpdateActorDto } from './dto/update-actor.dto';
 import { Actor } from './entities';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags("Actor")
 @Controller('actor')
 export class ActorController {
   constructor(private readonly actorService: ActorService) {}
