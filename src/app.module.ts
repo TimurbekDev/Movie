@@ -3,18 +3,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { appConfig, databaseConfig } from './config';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { Category } from './modules/categories/entities';
-import { CategoriesModule } from './modules/categories/categories.module';
-
 import { JwtModule } from '@nestjs/jwt';
-import { UsersModule } from './modules';
-import { AuthModule } from './modules/auth/auth.module';
+import { ActorModule, AuthModule, CategoriesModule, Category, Movie, MoviesModule, Review, ReviewsModule, User, UsersModule } from './modules';
 
 
 
-import { MoviesModule } from './modules';
-import { Review } from './modules/reviews/entities/review.entity';
-import { ReviewsModule } from './modules/reviews/reviews.module';
 
 
 @Module({
@@ -39,8 +32,8 @@ import { ReviewsModule } from './modules/reviews/reviews.module';
       synchronize: true,
       logging: console.log,
       autoLoadModels: true,
-      sync: {force: true},
-      models: [Category],
+      // sync: {force: true},
+      models: [Category,User,Review,Movie],
 
     }),
   }),
@@ -52,9 +45,9 @@ import { ReviewsModule } from './modules/reviews/reviews.module';
   CategoriesModule,
   UsersModule,
   AuthModule,
-  CategoriesModule,
   MoviesModule,
-  ReviewsModule
+  ReviewsModule,
+  ActorModule
 ],
   controllers: [],
   providers: [],

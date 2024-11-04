@@ -1,8 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { Review } from './entities/review.entity';
+
+export declare interface updateDeleteReviewresult {
+  message: string
+}
 
 @Injectable()
 export class ReviewsService {
@@ -11,19 +15,31 @@ export class ReviewsService {
     return await this.reviewModel.create(createReviewDto) ;
   }
 
-  findAll() {
-    return `This action returns all reviews`;
+  async findAll(): Promise<Review[]> {
+    return await this.reviewModel.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} review`;
+  async findOne(id: number): Promise<Review> {
+    return await this.reviewModel.findByPk(id);
   }
 
-  update(id: number, updateReviewDto: UpdateReviewDto) {
-    return `This action updates a #${id} review`;
+  async update(id: number, updateReviewDto: UpdateReviewDto):Promise<updateDeleteReviewresult> {
+    const foundedReview = await this.reviewModel.findByPk(id)
+    if(!foundedReview){
+      throw new NotFoundException("Review not found")
+    }
+    return {
+      message: "Review updated"
+    };
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} review`;
+  async remove(id: number): Promise<updateDeleteReviewresult> {
+    const foundedReview = await this.reviewModel.findByPk(id)
+    if(!foundedReview){
+      throw new NotFoundException("Review not found")
+    }
+    return {
+      message: "Review deleted"
+    };
   }
 }
