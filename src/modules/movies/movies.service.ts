@@ -2,6 +2,9 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { ICreateMovieRequest, IUpdateMovieRequest } from './interfaces';
 import { InjectModel } from '@nestjs/sequelize';
 import { Movie } from './models';
+import { Review } from '../reviews/entities/review.entity';
+import { model } from 'mongoose';
+import { User } from '../users';
 
 @Injectable()
 export class MoviesService {
@@ -12,7 +15,7 @@ export class MoviesService {
   }
 
   async findAll(): Promise<Movie[]> {
-    return await this.movieModel.findAll();
+    return await this.movieModel.findAll({include: [{model: Review, attributes: ["user_id","text"],include: [{model: User}]}]});
   }
 
   async findOne(id: number): Promise<Movie>{

@@ -1,4 +1,5 @@
-import { Column, DataType, Model, Table } from "sequelize-typescript";
+import { Column, DataType, HasMany, Model, Table } from "sequelize-typescript";
+import { Review } from "src/modules/reviews/entities/review.entity";
 
 @Table({tableName: "movies", timestamps: true})
 export class Movie extends Model<Movie> {
@@ -13,4 +14,7 @@ export class Movie extends Model<Movie> {
 
     @Column({type: DataType.STRING, allowNull: false})
     video: string
+
+    @HasMany(()=>Review)
+    reviews: Review[]
 }

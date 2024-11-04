@@ -13,6 +13,8 @@ import { AuthModule } from './modules/auth/auth.module';
 
 
 import { MoviesModule } from './modules';
+import { Review } from './modules/reviews/entities/review.entity';
+import { ReviewsModule } from './modules/reviews/reviews.module';
 
 
 @Module({
@@ -37,7 +39,7 @@ import { MoviesModule } from './modules';
       synchronize: true,
       logging: console.log,
       autoLoadModels: true,
-      // sync: {force: true},
+      sync: {force: true},
       models: [Category],
 
     }),
@@ -52,6 +54,7 @@ import { MoviesModule } from './modules';
   AuthModule,
   CategoriesModule,
   MoviesModule,
+  ReviewsModule
 ],
   controllers: [],
   providers: [],
