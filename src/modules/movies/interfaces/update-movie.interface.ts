@@ -1,4 +1,4 @@
-import { ICreateMovieRequest } from "./create-movie.interface";
+import { ICreateMovieRequest } from './create-movie.interface';
 
-export declare interface IUpdateMovieRequest extends Partial<ICreateMovieRequest> {
-}
+export declare interface IUpdateMovieRequest
+  extends Partial<ICreateMovieRequest> {}

@@ -1,3 +1,3 @@
 export declare interface ICreateCategory {
-    name: string
+  name: string;
 }

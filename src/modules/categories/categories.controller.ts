@@ -1,10 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import { ApiTags } from '@nestjs/swagger';
 import { Category } from './entities';
 import { CreateCategoryDto, UpdateCategoryDto } from './dto';
 
-@ApiTags("Categories")
+@ApiTags('Categories')
 @Controller('categories')
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
@@ -25,12 +33,15 @@ export class CategoriesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto):Promise<Category> {
+  update(
+    @Param('id') id: string,
+    @Body() updateCategoryDto: UpdateCategoryDto,
+  ): Promise<Category> {
     return this.categoriesService.update(+id, updateCategoryDto);
   }
-  
+
   @Delete(':id')
-  remove(@Param('id') id: string):Promise<object> {
+  remove(@Param('id') id: string): Promise<object> {
     return this.categoriesService.remove(+id);
   }
 }

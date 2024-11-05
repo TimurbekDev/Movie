@@ -55,6 +55,7 @@ import { ActorMovieModule } from './modules/actor-movie/actor-movie.module';
   ActorMovieModule
   
 ],
+
   controllers: [],
   providers: [],
 })
