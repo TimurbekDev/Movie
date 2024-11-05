@@ -7,6 +7,7 @@ import { appConfig, databaseConfig, jwtConfig, strategyConfig } from '@config';
 
 
 
+
 @Module({
   imports: [ServeStaticModule.forRoot({
     serveRoot: "/uploads",
@@ -40,8 +41,7 @@ import { appConfig, databaseConfig, jwtConfig, strategyConfig } from '@config';
   MoviesModule,
   ReviewsModule,
   ActorModule,
-  ActorMovieModule,
-  
+  ActorMovieModule,  
 ],
 
   controllers: [],
