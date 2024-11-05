@@ -18,7 +18,7 @@ export class ActorService {
   }
 
   async findAll(): Promise<Actor[]> {
-    return await this.actorModel.findAll({include: [{model: Movie}]});
+    return await this.actorModel.findAll({include: [{model: Movie, through: {attributes: []}}]});
   }
 
   async findOne(id: number): Promise<Actor> {

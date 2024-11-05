@@ -27,6 +27,7 @@ export class AuthService {
       status: userStatus.USER,
     });
 
+      console.log(req.user.id)
     const accessToken = this.jwt.sign(
       { id: newUser.id, status: newUser.status },
       { secret: 'my-secret-key' },

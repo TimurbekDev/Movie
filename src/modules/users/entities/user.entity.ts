@@ -1,6 +1,7 @@
 import { Column, DataType, HasMany, Model, Table } from 'sequelize-typescript';
 import { userStatus } from '../userStatus';
 import { Review } from 'src/modules/reviews/entities/review.entity';
+import { Device } from 'src/modules/devices';
 
 @Table({ tableName: 'users', timestamps: true })
 export class User extends Model<User> {
@@ -23,4 +24,7 @@ export class User extends Model<User> {
 
   @HasMany(() => Review)
   reviews: Review[];
+
+  @HasMany(() => Device)
+  device: Device[]
 }

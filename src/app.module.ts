@@ -4,7 +4,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { appConfig, databaseConfig } from './config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { JwtModule } from '@nestjs/jwt';
-import { Actor, ActorModule, AuthModule, CategoriesModule, Category, Movie, MoviesModule, Review, ReviewsModule, User, UsersModule } from './modules';
+import { Actor, ActorModule, AuthModule, CategoriesModule, Category, Device, DevicesModule, Movie, MoviesModule, Review, ReviewsModule, User, UsersModule } from './modules';
 import { MovieActor } from './modules/actor-movie/entities';
 import { ActorMovieModule } from './modules/actor-movie/actor-movie.module';
 
@@ -36,7 +36,7 @@ import { ActorMovieModule } from './modules/actor-movie/actor-movie.module';
       logging: console.log,
       autoLoadModels: true,
       // sync: {force: true},
-      models: [Category,User,Review,Movie,MovieActor,Actor],
+      models: [Category,User,Review,Movie,MovieActor,Actor,Device],
 
     }),
   }),
@@ -51,8 +51,8 @@ import { ActorMovieModule } from './modules/actor-movie/actor-movie.module';
   MoviesModule,
   ReviewsModule,
   ActorModule,
-  ActorModule,
-  ActorMovieModule
+  ActorMovieModule,
+  DevicesModule
   
 ],
 
