@@ -1,14 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { appConfig, databaseConfig } from './config';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { JwtModule } from '@nestjs/jwt';
-import { Actor, ActorModule, AuthModule, CategoriesModule, Category, Device, DevicesModule, Movie, MoviesModule, Review, ReviewsModule, User, UsersModule } from './modules';
-import { MovieActor } from './modules/actor-movie/entities';
-import { ActorMovieModule } from './modules/actor-movie/actor-movie.module';
 
 
+
+
+import { Actor, ActorModule, ActorMovieModule, AuthModule, CategoriesModule, Category, Device, DevicesModule, Movie, MovieActor, MoviesModule, Review, ReviewsModule, User, UserModule } from '@modules';
+import { appConfig, databaseConfig, jwtConfig, strategyConfig } from '@config';
 
 
 
@@ -20,7 +19,7 @@ import { ActorMovieModule } from './modules/actor-movie/actor-movie.module';
   }),
   ConfigModule.forRoot({
     isGlobal: true,
-    load: [databaseConfig,appConfig]
+    load: [databaseConfig,appConfig,jwtConfig,strategyConfig]
   }),
   SequelizeModule.forRootAsync({
     imports: [ConfigModule],
@@ -40,19 +39,15 @@ import { ActorMovieModule } from './modules/actor-movie/actor-movie.module';
 
     }),
   }),
-  JwtModule.register({
-    global: true,
-    secret: "my-secret-key",
-    signOptions: { expiresIn: 120 },
-  }),
   CategoriesModule,
-  UsersModule,
+  UserModule,
   AuthModule,
   MoviesModule,
   ReviewsModule,
   ActorModule,
   ActorMovieModule,
   DevicesModule
+
   
 ],
 

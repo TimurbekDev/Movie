@@ -1,14 +1,16 @@
-import { Module } from '@nestjs/common';
-
+import { forwardRef, Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
-import { GoogleStrategy } from './strategies/google-strategy';
-import { User, UsersService } from '../users';
-import { SequelizeModule } from '@nestjs/sequelize';
+import { UserModule } from '../user';
+import { JwtCustomModule } from '../jwt';
+import { GoogleStrategy } from './strategies';
 
 @Module({
-  imports: [SequelizeModule.forFeature([User])],
-  providers: [GoogleStrategy, AuthService, UsersService],
   controllers: [AuthController],
+  providers: [AuthService,GoogleStrategy],
+  imports: [
+    forwardRef(()=>UserModule),
+    forwardRef(()=>JwtCustomModule)
+  ]
 })
 export class AuthModule {}

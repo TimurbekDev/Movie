@@ -6,8 +6,9 @@ import {
   Model,
   Table,
 } from 'sequelize-typescript';
-import { Movie } from 'src/modules/movies';
-import { User } from 'src/modules/users';
+import { Movie, User } from '@modules';
+
+
 
 @Table({ tableName: 'reviews', timestamps: true })
 export class Review extends Model<Review> {
