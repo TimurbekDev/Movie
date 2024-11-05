@@ -3,9 +3,9 @@ import { ICreateMovieRequest, IUpdateMovieRequest } from './interfaces';
 import { InjectModel } from '@nestjs/sequelize';
 import { Movie } from './models';
 import { Review } from '../reviews/entities/review.entity';
-import { User } from '../users';
 
 import { Actor } from '../actor';
+import { User } from '../user';
 
 @Injectable()
 export class MoviesService {
@@ -21,11 +21,7 @@ export class MoviesService {
         {
           model: Review,
           attributes: ['user_id', 'text'],
-          include: [
-            { 
-              model: User
-            }
-          ],
+          include: [User],
         },
         {
           model: Actor,

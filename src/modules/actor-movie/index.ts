@@ -1,0 +1,5 @@
+export * from './entities'
+export * from './dto'
+export * from './actor-movie.controller'
+export * from './actor-movie.module'
+export * from './actor-movie.service'
