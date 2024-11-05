@@ -29,7 +29,7 @@ export class MoviesService {
         },
         {
           model: Actor,
-          attributes: ["id","name","image"]
+          through: {attributes: []}
         }
       ],
     });

@@ -35,8 +35,8 @@ export class Movie extends Model<Movie> {
   @Column({ type: DataType.STRING, allowNull: false })
   country: string;
 
-    @ForeignKey(() => Category)
-    @Column({type: DataType.INTEGER, allowNull: false, onDelete: 'CASCADE', onUpdate: 'NO ACTION'})
+  @ForeignKey(() => Category)
+ @Column({type: DataType.INTEGER, allowNull: false, onDelete: 'CASCADE', onUpdate: 'NO ACTION'})
     category_id: number
 
     @BelongsTo(() => Category)
