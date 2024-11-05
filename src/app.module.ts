@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { Actor, ActorModule, ActorMovieModule, AuthModule, CategoriesModule, Category, Movie, MovieActor, MoviesModule, Review, ReviewsModule, User, UserModule } from '@modules';
+import { Actor, ActorModule, ActorMovieModule, AuthModule, CategoriesModule, Category, Device, DevicesModule, Movie, MovieActor, MoviesModule, Review, ReviewsModule, User, UserModule } from '@modules';
 import { appConfig, databaseConfig, jwtConfig, strategyConfig } from '@config';
 
 
@@ -15,12 +15,12 @@ import { appConfig, databaseConfig, jwtConfig, strategyConfig } from '@config';
   }),
   ConfigModule.forRoot({
     isGlobal: true,
-    load: [databaseConfig,appConfig,jwtConfig,strategyConfig]
+    load: [databaseConfig, appConfig, jwtConfig, strategyConfig]
   }),
   SequelizeModule.forRootAsync({
     imports: [ConfigModule],
     inject: [ConfigService],
-    useFactory: (configService: ConfigService) =>({
+    useFactory: (configService: ConfigService) => ({
       dialect: 'postgres',
       username: configService.get<string>("database.user"),
       password: configService.get<string>("database.pass"),
@@ -31,20 +31,21 @@ import { appConfig, databaseConfig, jwtConfig, strategyConfig } from '@config';
       logging: console.log,
       autoLoadModels: true,
       // sync: {force: true},
-      models: [Category,User,Review,Movie,MovieActor,Actor],
+      models: [Category, User, Review, Movie, MovieActor, Actor, Device],
 
     }),
   }),
-  CategoriesModule,
-  UserModule,
-  AuthModule,
-  MoviesModule,
-  ReviewsModule,
-  ActorModule,
-  ActorMovieModule,  
-],
+    CategoriesModule,
+    UserModule,
+    AuthModule,
+    MoviesModule,
+    ReviewsModule,
+    ActorModule,
+    ActorMovieModule,
+    DevicesModule
+  ],
 
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule { }

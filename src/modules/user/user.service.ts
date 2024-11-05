@@ -5,6 +5,7 @@ import { User } from './models';
 import { hash } from 'bcrypt';
 import { HASH_SALT } from '@constants';
 import { InjectModel } from '@nestjs/sequelize';
+import { Device } from '../devices';
 
 @Injectable()
 export class UserService {
@@ -39,7 +40,8 @@ export class UserService {
     const user = await this.userModel.findByPk(id, {
       attributes: {
         exclude: ['password', 'createdAt', 'updatedAt']
-      }
+      },
+      include: [{model: Device}]
     })
     if (!user)
       throw new NotFoundException('User not found')

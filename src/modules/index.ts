@@ -5,4 +5,5 @@ export * from './reviews';
 export * from './actor-movie'
 export * from './auth';
 export * from './actor';
+export * from "./devices"
 export * from './jwt'

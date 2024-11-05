@@ -1,6 +1,7 @@
-import { Column, DataType, Model, Table } from "sequelize-typescript";
+import { Column, DataType, HasMany, Model, Table } from "sequelize-typescript";
 import { IUser } from "../interfaces";
 import { UserRoles } from "../enums";
+import { Device } from "src/modules/devices";
 
 @Table({
     tableName: 'User'
@@ -37,4 +38,8 @@ export class User extends Model<IUser> implements IUser {
         allowNull: false,
     })
     password: string;
+
+
+    @HasMany(()=>Device)
+    devices: Device[]
 }
