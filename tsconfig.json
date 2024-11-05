@@ -11,7 +11,9 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
-      "@modules": ["./src/modules"]
+      "@modules": ["src/modules"],
+      "@constants": ["src/constants"],
+      "@config": ["src/config"],
     },
     "incremental": true,
     "skipLibCheck": true,

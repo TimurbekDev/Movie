@@ -1,6 +1,5 @@
 import { Column, DataType, ForeignKey, Model, Table } from "sequelize-typescript";
-import { Actor } from "src/modules/actor/entities";
-import { Movie } from "src/modules/movies";
+import { Actor,Movie } from "@modules";
 
 
 
