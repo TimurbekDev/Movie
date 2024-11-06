@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiTags } from '@nestjs/swagger';
-import { SignInDto, SignUpDto } from './dto';
+import { ForgotPasswordDto, ResetPasswordDto, SignInDto, SignUpDto } from './dto';
 import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('Auth')
@@ -17,6 +17,15 @@ export class AuthController {
   @Post('sign-in')
   async signIn(@Body() signInDto:SignInDto){
     return await this.authService.signIn(signInDto);
+  }
+
+  @Post('forgot-password')
+  async forgotPassword(@Body() forgotPassDto:ForgotPasswordDto){
+    return await this.authService.forgotPassword(forgotPassDto.email);
+  }
+  @Post('reset-password')
+  async resetPassword(@Body() resetPassDto:ResetPasswordDto){
+    return await this.authService.resetPassword(resetPassDto);
   }
 
   @Get('google')

@@ -3,11 +3,13 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Actor, ActorModule, ActorMovieModule, AuthModule, CategoriesModule, Category, Device, DevicesModule, JwtCustomModule, Movie, MovieActor, MoviesModule, Review, ReviewsModule, User, UserModule } from '@modules';
-import { appConfig, databaseConfig, jwtConfig, strategyConfig } from '@config';
-import { SeedsModule } from './seeds';
-import { CheckAuthGuard } from '@guards';
+import { appConfig, databaseConfig, jwtConfig, mailerConfig, redisConfig, strategyConfig } from '@config';
+import { CheckAuthGuard, CheckRoleGuard } from '@guards';
 import { APP_GUARD } from '@nestjs/core';
-import { CheckRoleGuard } from './guards/check-role.guard';
+import { RedisModule } from '@nestjs-modules/ioredis';
+import { SeedsModule } from '@seeds';
+import { MailerModule } from '@nestjs-modules/mailer';
+import { MailerCustomModule } from '@mailer';
 
 
 
@@ -19,7 +21,7 @@ import { CheckRoleGuard } from './guards/check-role.guard';
   }),
   ConfigModule.forRoot({
     isGlobal: true,
-    load: [databaseConfig, appConfig, jwtConfig, strategyConfig]
+    load: [databaseConfig, appConfig, jwtConfig, strategyConfig, redisConfig,mailerConfig]
   }),
   SequelizeModule.forRootAsync({
     imports: [ConfigModule],
@@ -34,10 +36,34 @@ import { CheckRoleGuard } from './guards/check-role.guard';
       synchronize: true,
       logging: console.log,
       autoLoadModels: true,
-      sync: {force: false},
+      sync: { force: false },
       models: [Category, User, Review, Movie, MovieActor, Actor, Device],
-
-    }),
+    })
+  }),
+  RedisModule.forRootAsync({
+    imports: [ConfigModule],
+    inject: [ConfigService],
+    useFactory: (config: ConfigService) => ({
+      type: 'single',
+      options: {
+        host: config.get<string>('redis.host'),
+        port: config.get<number>('redis.port')
+      }
+    })
+  }),
+  MailerModule.forRootAsync({
+    imports: [ConfigModule],
+    inject: [ConfigService],
+    useFactory: (config: ConfigService) => ({
+      transport: {
+        host: config.get<string>('email.host'),
+        port: config.get<number>('email.port'),
+        auth: {
+          user: config.get<string>('email.user'),
+          pass: config.get<string>('email.pass')
+        }
+      }
+    })
   }),
     CategoriesModule,
     UserModule,
@@ -48,18 +74,20 @@ import { CheckRoleGuard } from './guards/check-role.guard';
     ActorMovieModule,
     DevicesModule,
     JwtCustomModule,
-    SeedsModule
+    SeedsModule,
+    RedisModule,
+    MailerCustomModule
   ],
 
   controllers: [],
   providers: [
     {
-      useClass : CheckAuthGuard,
-      provide : APP_GUARD
+      useClass: CheckAuthGuard,
+      provide: APP_GUARD
     },
     {
-      useClass : CheckRoleGuard,
-      provide : APP_GUARD
+      useClass: CheckRoleGuard,
+      provide: APP_GUARD
     }
   ],
 })

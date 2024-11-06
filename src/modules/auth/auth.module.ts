@@ -4,13 +4,16 @@ import { AuthController } from './auth.controller';
 import { UserModule } from '../user';
 import { JwtCustomModule } from '../jwt';
 import { GoogleStrategy } from './strategies';
+import { RedisCustomModule, RedisService } from '@redis';
+import { MailerCustomService } from '@mailer';
 
 @Module({
   controllers: [AuthController],
-  providers: [AuthService,GoogleStrategy],
+  providers: [AuthService,GoogleStrategy,MailerCustomService],
   imports: [
     forwardRef(()=>UserModule),
-    forwardRef(()=>JwtCustomModule)
+    forwardRef(()=>JwtCustomModule),
+    forwardRef(()=>RedisCustomModule)
   ]
 })
 export class AuthModule {}
