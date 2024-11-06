@@ -31,11 +31,22 @@ export class MoviesService {
     });
   }
 
+  
   async findOne(id: number): Promise<Movie> {
     if (!(await this.movieModel.findByPk(id))) {
       throw new NotFoundException('Movie not found');
     }
-    return await this.movieModel.findByPk(id);
+    return await this.movieModel.findByPk(id,{include: [
+      {
+        model: Review,
+        attributes: ['user_id', 'text'],
+        include: [User],
+      },
+      {
+        model: Actor,
+        through: {attributes: []}
+      }
+    ],});
   }
 
   async update(id: number, payload: IUpdateMovieRequest): Promise<Movie> {

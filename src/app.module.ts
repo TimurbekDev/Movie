@@ -15,7 +15,7 @@ import { appConfig, databaseConfig, jwtConfig, strategyConfig } from '@config';
 @Module({
   imports: [ServeStaticModule.forRoot({
     serveRoot: "/uploads",
-    rootPath: "/uploads"
+    rootPath: "./uploads"
   }),
   ConfigModule.forRoot({
     isGlobal: true,

@@ -6,6 +6,11 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function startApp() {
   const app = await NestFactory.create(AppModule);
 
+  app.enableCors({
+    origin: "*",
+    methods: ["POST","GET","PATCH","DELETE","PUT"]
+  })
+
   // USE SWAGGER
   const config = new DocumentBuilder()
     .setTitle('MovieSite')
