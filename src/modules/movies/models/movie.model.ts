@@ -12,9 +12,9 @@ import {
 import { Actor, Category, MovieActor, Review } from "@modules"
 
 
-@Table({ tableName: 'movies', timestamps: true })
+@Table({ tableName: 'movies', timestamps: false })
 export class Movie extends Model<Movie> {
-  @Column({ type: DataType.STRING, allowNull: false, unique: true })
+  @Column({ type: DataType.STRING, allowNull: false, unique: false })
   name: string;
 
   @Column({ type: DataType.STRING(20000), allowNull: false })

@@ -2,8 +2,12 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { Actor, ActorModule, ActorMovieModule, AuthModule, CategoriesModule, Category, Device, DevicesModule, Movie, MovieActor, MoviesModule, Review, ReviewsModule, User, UserModule } from '@modules';
+import { Actor, ActorModule, ActorMovieModule, AuthModule, CategoriesModule, Category, Device, DevicesModule, JwtCustomModule, Movie, MovieActor, MoviesModule, Review, ReviewsModule, User, UserModule } from '@modules';
 import { appConfig, databaseConfig, jwtConfig, strategyConfig } from '@config';
+import { SeedsModule } from './seeds';
+import { CheckAuthGuard } from '@guards';
+import { APP_GUARD } from '@nestjs/core';
+import { CheckRoleGuard } from './guards/check-role.guard';
 
 
 
@@ -30,7 +34,7 @@ import { appConfig, databaseConfig, jwtConfig, strategyConfig } from '@config';
       synchronize: true,
       logging: console.log,
       autoLoadModels: true,
-      // sync: {force: true},
+      sync: {force: false},
       models: [Category, User, Review, Movie, MovieActor, Actor, Device],
 
     }),
@@ -42,10 +46,21 @@ import { appConfig, databaseConfig, jwtConfig, strategyConfig } from '@config';
     ReviewsModule,
     ActorModule,
     ActorMovieModule,
-    DevicesModule
+    DevicesModule,
+    JwtCustomModule,
+    SeedsModule
   ],
 
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      useClass : CheckAuthGuard,
+      provide : APP_GUARD
+    },
+    {
+      useClass : CheckRoleGuard,
+      provide : APP_GUARD
+    }
+  ],
 })
 export class AppModule { }
