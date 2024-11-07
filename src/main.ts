@@ -8,7 +8,6 @@ async function startApp() {
 
   app.enableCors({
     origin: "*",
-    methods: ["POST","GET","PATCH","DELETE","PUT"]
   })
 
   // USE SWAGGER
