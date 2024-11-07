@@ -6,6 +6,7 @@ import { compare, hash } from 'bcrypt';
 import { HASH_SALT } from '@constants';
 import { RedisService } from '@redis';
 import { MailerCustomService } from '@mailer';
+import { DevicesService } from '../devices';
 
 
 @Injectable()
@@ -15,6 +16,7 @@ export class AuthService {
     @Inject(JwtCustomService) private jwtCustomService: JwtCustomService,
     @Inject(RedisService) private redisService: RedisService,
     @Inject(MailerCustomService) private mailerService: MailerCustomService,
+    @Inject(DevicesService) private deviceService: DevicesService,
   ) { }
 
   async signUp(payload: ISignUpRequest) {
@@ -24,6 +26,12 @@ export class AuthService {
       role: data.user.role,
     })
 
+    await this.deviceService.create({
+      name: "Win11",
+      acces_token: tokens.access,
+      refresh_token:tokens.refresh,
+      user_id: data.user.id
+    })
     return {
       user: data.user,
       access_token: tokens.access,

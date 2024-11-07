@@ -8,11 +8,14 @@ import {
   Delete,
 } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Category } from './entities';
 import { CreateCategoryDto, UpdateCategoryDto } from './dto';
+import { UserRoles } from '../user';
+import { Protected, Roles } from '@decorators';
 
 @ApiTags('Categories')
+@ApiBearerAuth('auth')
 @Controller('categories')
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
@@ -32,6 +35,8 @@ export class CategoriesController {
     return this.categoriesService.findOne(+id);
   }
 
+  @Protected(true)
+  @Roles([UserRoles.ADMIN])
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -40,6 +45,8 @@ export class CategoriesController {
     return this.categoriesService.update(+id, updateCategoryDto);
   }
 
+  @Protected(true)
+  @Roles([UserRoles.ADMIN])
   @Delete(':id')
   remove(@Param('id') id: string): Promise<object> {
     return this.categoriesService.remove(+id);

@@ -40,6 +40,8 @@ export class MoviesController {
       multerConfig,
     ),
   )
+  @Protected(true)
+  @Roles([UserRoles.ADMIN])
   @Post()
   create(
     @Body() createMovieDto: CreateMovieDto,
@@ -61,7 +63,7 @@ export class MoviesController {
   @ApiQuery({ name: 'limit', type: Number, required: false })
   @ApiQuery({ name: 'page', type: Number, required: false })
   @Protected(true)
-  @Roles([UserRoles.ADMIN])
+  @Roles([UserRoles.ADMIN,UserRoles.BASIC])
   @Get()
   findAll(@Query() query : GetMoviesDto) {
     return this.moviesService.findAll(query);
@@ -84,6 +86,8 @@ export class MoviesController {
       multerConfig,
     ),
   )
+  @Protected(true)
+  @Roles([UserRoles.ADMIN])
   @Patch(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
@@ -98,6 +102,8 @@ export class MoviesController {
   }
 
   @ApiOperation({ summary: "movieni idsi bo'yicha o'chirish" })
+  @Protected(true)
+  @Roles([UserRoles.ADMIN])
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.moviesService.remove(id);

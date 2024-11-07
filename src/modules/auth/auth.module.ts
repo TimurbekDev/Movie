@@ -6,6 +6,7 @@ import { JwtCustomModule } from '../jwt';
 import { GoogleStrategy } from './strategies';
 import { RedisCustomModule, RedisService } from '@redis';
 import { MailerCustomService } from '@mailer';
+import { DevicesModule, DevicesService } from '../devices';
 
 @Module({
   controllers: [AuthController],
@@ -13,7 +14,8 @@ import { MailerCustomService } from '@mailer';
   imports: [
     forwardRef(()=>UserModule),
     forwardRef(()=>JwtCustomModule),
-    forwardRef(()=>RedisCustomModule)
+    forwardRef(()=>RedisCustomModule),
+    forwardRef(()=>DevicesModule)
   ]
 })
 export class AuthModule {}

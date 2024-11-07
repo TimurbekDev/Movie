@@ -1,13 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateDeviceDto } from './dto/create-device.dto';
 import { UpdateDeviceDto } from './dto/update-device.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { Device } from './entities';
 import { IDeleteDevice } from './interfaces';
+import { UserService } from '../user';
 
 @Injectable()
 export class DevicesService {
-  constructor(@InjectModel(Device) private devices: typeof Device){}
+  constructor(
+    @InjectModel(Device) private devices: typeof Device,
+    // @Inject(UserService) private userService: UserService, 
+){}
   async create(createDeviceDto: CreateDeviceDto) {
     return await this.devices.create(createDeviceDto);
   }
@@ -16,7 +20,9 @@ export class DevicesService {
     return this.devices.findAll();
   }
 
-  findOne(id: number) {
+  
+
+  findByUserId(id: number) {
     return `This action returns a #${id} device`;
   }
 
