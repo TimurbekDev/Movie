@@ -53,6 +53,6 @@ export class CheckAuthGuard implements CanActivate {
         request.userId = payload.userId
         request.role = payload.role
 
-        return true;
+        return true; 
     }
 }
