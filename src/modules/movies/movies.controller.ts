@@ -9,15 +9,22 @@ import {
   ParseIntPipe,
   UseInterceptors,
   UploadedFiles,
+  Query,
 } from '@nestjs/common';
 import { MoviesService } from './movies.service';
 import { CreateMovieDto } from './dtos/create-movie.dto';
 import { UpdateMovieDto } from './dtos/update-movie.dto';
-import { ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiConsumes, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { multerConfig } from 'src/config';
+import { GetMoviesDto } from './dtos';
+import { ENUM } from 'sequelize';
+import { SORT } from './enums';
+import { Protected, Roles } from '@decorators';
+import { UserRoles } from '../user';
 
 @ApiTags('Movies')
+@ApiBearerAuth('auth')
 @Controller('movies')
 export class MoviesController {
   constructor(private readonly moviesService: MoviesService) {}
@@ -47,9 +54,17 @@ export class MoviesController {
   }
 
   @ApiOperation({ summary: 'Barcha movielarni olish' })
+  @ApiQuery({ name: 'language', type: String, required: false })
+  @ApiQuery({ name: 'country', type: String, required: false })
+  @ApiQuery({ name: 'name', type: String, required: false })
+  @ApiQuery({ name: 'sort', enum : SORT, required: false })
+  @ApiQuery({ name: 'limit', type: Number, required: false })
+  @ApiQuery({ name: 'page', type: Number, required: false })
+  @Protected(true)
+  @Roles([UserRoles.ADMIN])
   @Get()
-  findAll() {
-    return this.moviesService.findAll();
+  findAll(@Query() query : GetMoviesDto) {
+    return this.moviesService.findAll(query);
   }
 
   @ApiOperation({ summary: `Bitta movieni idsi bo'yicha olish` })

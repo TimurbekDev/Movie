@@ -1,34 +1,49 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { ICreateMovieRequest, IUpdateMovieRequest } from './interfaces';
+import { ICreateMovieRequest, IGetMoviesQuery, IUpdateMovieRequest } from './interfaces';
 import { InjectModel } from '@nestjs/sequelize';
 import { Movie } from './models';
 import { Review } from '../reviews/entities/review.entity';
 
 import { Actor } from '../actor';
 import { User } from '../user';
+import { Op } from 'sequelize';
+import { SORT } from './enums';
 
 @Injectable()
 export class MoviesService {
-  constructor(@InjectModel(Movie) private movieModel: typeof Movie) {}
+  constructor(@InjectModel(Movie) private movieModel: typeof Movie) { }
 
   async create(payload: ICreateMovieRequest): Promise<Movie> {
     return await this.movieModel.create(payload);
   }
 
-  async findAll(): Promise<Movie[]> {
-    return await this.movieModel.findAll({
-      include: [
-        {
-          model: Review,
-          attributes: ['user_id', 'text'],
-          include: [User],
-        },
-        {
-          model: Actor,
-          through: {attributes: []}
-        }
-      ],
+  async findAll(query: Partial<IGetMoviesQuery>) {
+
+    const whereConditions: { language?: object; country?: object, [Op.or]?: object[]; } = {}
+
+    if (query?.name)
+      whereConditions[Op.or] = [{ 'name': { [Op.iLike]: `%${query.name}%` } }, { 'description': { [Op.iLike]: `%${query.name}%` } }]
+
+    if (query?.language)
+      whereConditions.language = { [Op.iLike]: `%${query.language}%` };
+
+    if (query?.country)
+      whereConditions.country = { [Op.iLike]: `%${query.country}%` };
+
+    const result = await this.movieModel.findAndCountAll({
+      where: {
+        ...whereConditions
+      },
+      offset: (query?.page - 1) * query?.limit || 0,
+      limit: query?.limit || 10
     });
+
+    return {
+      count: result.count,
+      page: Number(query?.page || 1),
+      limit: Number(query?.limit || 10),
+      result: result.rows
+    }
   }
 
   
