@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  app:
+    image: node:18
+    container_name: nestjs_app
+    working_dir: /app
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - redis
+    command: sh -c "npm install && npm run start:dev"
+    ports:
+      - '${APP_PORT}:${APP_PORT}'
+
+  db:
+    image: postgres:15
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - '5433:5432'
+
+  redis:
+    image: redis:7
+    container_name: redis_cache
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data:/data
+
+volumes:
+  postgres_data:
+  redis_data:
